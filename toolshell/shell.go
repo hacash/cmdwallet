@@ -26,9 +26,9 @@ var (
 var welcomeContent = `
 Welcome to Hacash tool shell, you can:
 --------
-passwd $XXX $XXX  |  prikey $0xAB123D...  |  newkey  |  accounts  |  update
+passwd ${XXX} ${XXX}  |  prikey ${0xAB123D...}  |  newkey  |  accounts  |  update
 --------
-gentx sendcash $FROM_ADDRESS $TO_ADDRESS $AMOUNT $FEE  |  loadtx $0xTXBODYBYTES  |  txs
+gentx sendcash ${FROM_ADDRESS} ${TO_ADDRESS} ${AMOUNT} ${FEE}  |  loadtx ${0xAB123D...}  |  txs
 --------
 sendtx $TXHASH $IP:PORT
 --------

@@ -12,6 +12,30 @@ import (
 	"strconv"
 )
 
+
+
+
+/*
+
+
+gentx sendcash ${FROM_ADDRESS} ${TO_ADDRESS} ${AMOUNT} ${FEE}
+
+
+passwd 123456
+
+gentx sendcash 1MzNY1oA3kfgYi75zquj3SRUPYztzXHzK9 1699oAd32emhfShPDFVs5UY8vJNe2u42Fz 1:248 1:244
+
+
+
+
+ */
+
+
+
+
+
+
+
 // 创建一笔交易
 func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 	if len(params) < 4 {

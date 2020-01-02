@@ -15,7 +15,7 @@ import (
 /*
 
 
-gentx diamond $DIAMOND $NUMBER $PrevHash $Nonce $Address $feeAddress $FEE
+gentx diamond ${DIAMOND} ${NUMBER} ${PrevHash} ${Nonce} ${Address} ${feeAddress} ${FEE}
 
 
 passwd 123456

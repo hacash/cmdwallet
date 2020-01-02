@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-// gentx paychan ADDRESS1 AMOUNT1 ADDRESS2 AMOUNT2 FEE
+// gentx paychan ${ADDRESS1} ${AMOUNT1} ${ADDRESS2} ${AMOUNT2} ${FEE}
 /*
 
 passwd 123456
