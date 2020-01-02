@@ -26,7 +26,7 @@ var (
 var welcomeContent = `
 Welcome to Hacash tool shell, you can:
 --------
-passwd ${XXX} ${XXX}  |  prikey ${0xAB123D...}  |  newkey  |  accounts  |  update
+passwd ${XXX} ${XXX}  |  prikey ${0xAB123D...}  |  newkey  |  accounts  |  update | log
 --------
 gentx sendcash ${FROM_ADDRESS} ${TO_ADDRESS} ${AMOUNT} ${FEE}  |  loadtx ${0xAB123D...}  |  txs
 --------
@@ -37,22 +37,8 @@ exit, quit
 
 func RunToolShell() {
 
-	abspath, err := filepath.Abs(os.Args[0])
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(0)
-	}
-	abspath = path.Dir(abspath)
-	logfilename := path.Join(abspath, time.Now().Format("2006-01-02_15:04:05") + ".log")
-
-	logfile, err := os.OpenFile(logfilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY,0660)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(0)
-	}
-
 	var ctx = &ctxToolShell{
-		logfile: logfile,
+		logfile: nil,
 	}
 
 	fmt.Println(welcomeContent)
@@ -85,6 +71,17 @@ func RunToolShell() {
 			currentInputContent == "quit" {
 			fmt.Println("Bye")
 			break
+		}
+
+		// log
+		if currentInputContent == "log" {
+			filename := openLogFile(ctx)
+			fmt.Println("Open to write log file: " + filename)
+			continue
+		}else if currentInputContent == "closelog" {
+			filename := closeLogFile(ctx)
+			fmt.Println("Close log file: " + filename)
+			continue
 		}
 
 		ctx.LogFileWriteln("\n- - - - - - - - "+time.Now().Format("15:04:05")+" - - - - - - - -\n\n> " + currentInputContent)
@@ -129,6 +126,44 @@ func RunToolShell() {
 }
 
 /////////////////////////////////////////////////
+
+func openLogFile(ctx *ctxToolShell) string {
+
+	if ctx.logfile != nil {
+		return ctx.logfile.Name()
+	}
+
+	abspath, err := filepath.Abs(os.Args[0])
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(0)
+	}
+	abspath = path.Dir(abspath)
+	logfilename := path.Join(abspath, time.Now().Format("2006-01-02_15:04:05") + ".log")
+
+	logfile, err := os.OpenFile(logfilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY,0660)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(0)
+	}
+
+	// set return
+	ctx.logfile = logfile
+	return logfile.Name()
+}
+
+
+func closeLogFile(ctx *ctxToolShell) string {
+	if ctx.logfile == nil {
+		return ""
+	}
+	ctx.logfile.Close()
+	name := ctx.logfile.Name()
+	ctx.logfile = nil
+	return name
+}
+
+
 
 /////////////////////////////////////////////////////////
 
