@@ -61,7 +61,7 @@ func RunToolShell() {
 	fmt.Println("The use time hold on " + holdTimeStr + ", enter 'update' change to now")
 	fmt.Println("Continue to enter anything:")
 
-	ctx.LogFileWriteln(holdTimeStr)
+	ctx.LogFileWriteln("The use hold time is " + holdTimeStr)
 
 	inputReader := bufio.NewReader(os.Stdin)
 
@@ -87,7 +87,7 @@ func RunToolShell() {
 			break
 		}
 
-		ctx.LogFileWriteln("- - - - - - - - - - - - - - - -\n> " + currentInputContent)
+		ctx.LogFileWriteln("\n- - - - - - - - "+time.Now().Format("15:04:05")+" - - - - - - - -\n\n> " + currentInputContent)
 
 		if currentInputContent == "update" {
 			TargetTime = time.Now()
@@ -138,9 +138,9 @@ func showAccounts(ctx *ctxToolShell) {
 		return
 	}
 	for k, _ := range MyAccounts {
-		ctx.Printf(k + " ")
+		ctx.Print(k + " ")
 	}
-	ctx.Printf("\n")
+	ctx.Println("\n")
 }
 
 func showTxs(ctx *ctxToolShell) {

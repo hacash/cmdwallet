@@ -85,7 +85,7 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	// ok
 	ctx.Println("transaction create success! ")
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
-	ctx.Printf("( payment_channel_id = %s )\n", hex.EncodeToString(paychan.ChannelId))
+	ctx.Println("( payment_channel_id = <" + hex.EncodeToString(paychan.ChannelId) + "> )")
 
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {

@@ -17,5 +17,5 @@ type Context interface {
 	//////////////////////////////////////////////////////////////////
 
 	Println(...interface{})
-	Printf(string, ...interface{})
+	Print(...interface{})
 }
