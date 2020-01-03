@@ -139,7 +139,7 @@ func openLogFile(ctx *ctxToolShell) string {
 		os.Exit(0)
 	}
 	abspath = path.Dir(abspath)
-	logfilename := path.Join(abspath, time.Now().Format("2006-01-02_15:04:05") + ".log")
+	logfilename := path.Join(abspath, time.Now().Format("2006_01_02_15_04_05") + ".log")
 
 	logfile, err := os.OpenFile(logfilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY,0660)
 	if err != nil {
