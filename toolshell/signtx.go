@@ -8,6 +8,14 @@ import (
 	"strconv"
 )
 
+/*
+
+
+>sign <txhx> addr1 addr2 ...
+
+
+*/
+
 func signTx(ctx ctx.Context, params []string) {
 	if len(params) < 1 {
 		fmt.Println("params not enough")
