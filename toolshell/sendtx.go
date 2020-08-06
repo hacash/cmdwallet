@@ -9,6 +9,12 @@ import (
 	"net/http"
 )
 
+/*
+
+sendtx <txhx> 127.0.0.1:3338
+
+*/
+
 // 发送一笔交易给矿工
 func sendTxToMiner(ctx ctx.Context, params []string) {
 	if len(params) < 2 {

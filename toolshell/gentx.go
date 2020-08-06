@@ -26,6 +26,10 @@ func genTx(ctx ctx.Context, params []string) {
 		gentxs.GenTxDiamondTransfer(ctx, bodys)
 	case "diamond_transfer_quantity": // 转移钻石
 		gentxs.GenTxOutfeeQuantityDiamondTransfer(ctx, bodys)
+	case "btcmove": // 确认BTC单向转移
+		gentxs.GenTxCreateSatoshiGenesis(ctx, bodys)
+	case "sendsat": // 确认BTC单向转
+		gentxs.GenTxSimpleTransferSatoshi(ctx, bodys)
 
 	default:
 		fmt.Println("Sorry, undefined gentx type: " + typename)
