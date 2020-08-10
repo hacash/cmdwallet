@@ -126,7 +126,7 @@ body length 159 bytes, hex body is:
 
 打开在线钱包，找到 发送交易 （Send transaction） 项，将拷贝的内容复制进去，点击“发送交易”（Send Tx），向 Hacash 主网提交构造好的转账交易：
 
-[](!./help/sendtx_online.png)
+![](https://raw.githubusercontent.com/hacash/cmdwallet/master/help/sendtx_online.png)
 
 我们看到此时返回了一个错误： `Send failed: Transaction Add to MemTxPool error: address 1Nk6Vcq4gZM6hJPhjtJYYWHmXRF8wtD7F5 balance ㄜ0:0 not enough， need ㄜ2:250.` 因为 `1Nk6Vcq4gZM6hJPhjtJYYWHmXRF8wtD7F5` 的地址是我们刚刚创建的，里面并没有币（余额为0）。需要通过购买或接受赠送，或者挖矿得到币后，才能转账成功。
 
