@@ -16,6 +16,7 @@ This tutorial will provide the most detailed tutorial for people who do not unde
 achieve operations such as creating an address, constructing a transfer transaction, and submitting a transfer transaction.
 
 ##Ready to work
+===
 You need to go to hacash.org to download the pre-compiled software, and download the corresponding version of the software 
 according to your operating system category (Windows or Ubuntu). Then decompress the downloaded ZIP files, then enter the decompressed directory, and then run them (double-click to run under windows, Ubuntu needs to press the right mouse button in the program directory, select "open in terminal", and enter).
 
