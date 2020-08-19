@@ -5,11 +5,14 @@ Hacash command line wallet usage tutorial
 The command line wallet is an offline tool. You can use it on a desktop computer that is not connected to the Internet to create accounts,
 construct transfer transactions, and so on.
 
-This tool is absolutely safe, because it will not transmit your password or private key on the Internet, everything is "local" operation.
+This tool is absolutely safe, because it will not transmit your password or private key on the Internet, everything is occurs in "local" operation.
 
 Because the local command line wallet is not connected to the Internet, it does not support balance query and check. If you need to check the 
-balance of an address, you can check on the online wallet . Since the operation of checking the balance does not
+balance of an address, you can check on the [online wallet](explorer.hacashpool.com). Since the operation of checking the balance does not
 involve a password or private key at all, it is safe to check on the online wallet.
+
+
+
 
 This tutorial will provide the most detailed tutorial for people who do not understand computer technology, and will teach you step by step to 
 achieve operations such as creating an address, constructing a transfer transaction, and submitting a transfer transaction.
