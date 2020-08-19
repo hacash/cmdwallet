@@ -15,28 +15,29 @@ involve a password or private key at all.
 This tutorial will provide the most detailed tutorial for people who do not understand computer technology, and will teach you step by step to 
 achieve operations such as creating an address, constructing a transfer transaction, and submitting a transfer transaction.
 
-##Ready to work
+Ready to work
 ===
-You need to go to hacash.org to download the pre-compiled software, and download the corresponding version of the software 
+You need to go to [hacash.org](hacash.org) to download the pre-compiled software, and download the corresponding version of the software 
 according to your operating system category (Windows or Ubuntu). Then decompress the downloaded ZIP files, then enter the decompressed directory, and then run them (double-click to run under windows, Ubuntu needs to press the right mouse button in the program directory, select "open in terminal", and enter).
 
-Tip: If you can't run a command line program under Ubuntu, please refer to this tutorial .
+Tip: If you can't run a command line program under Ubuntu, please refer to this [tutorial](https://zhidao.baidu.com/question/501887268.html) .
 
 Start
+===
 After the software runs, you will see the following in the window:
 
-Welcome to Hacash tool shell, you can:
---------
-passwd ${XXX}  ${XXX}   |   prikey ${0xAB123D...}   |   newkey   |   accounts   |   update | log
---------
-gentx sendcash ${FROM_ADDRESS}  ${TO_ADDRESS}  ${AMOUNT}  ${FEE}   |   loadtx ${0xAB123D...}   |   txs
---------
-sendtx $TXHASH  $IP :PORT
---------
-exit, quit
---------
-The use time hold on 2020/08/10 15:32:12, enter ' update ' change to now
-Continue to enter anything:
+>Welcome to Hacash tool shell, you can:
+>--------
+>passwd ${XXX}  ${XXX}   |   prikey ${0xAB123D...}   |   newkey   |   accounts   |   update | log
+>--------
+>gentx sendcash ${FROM_ADDRESS}  ${TO_ADDRESS}  ${AMOUNT}  ${FEE}   |   loadtx ${0xAB123D...}   |   txs
+>--------
+>sendtx $TXHASH  $IP :PORT
+>--------
+>exit, quit
+>--------
+>The use time hold on 2020/08/10 15:32:12, enter ' update ' change to now
+>Continue to enter anything:
 >
 
 This means that the tool has run successfully. Now you only need to input the specified command to complete operations such as creating an account and constructing a 
