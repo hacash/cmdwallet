@@ -1,5 +1,5 @@
 
-[![Hacash-banner](https://github.com/AsherManangan/cmdwallet/blob/master/screenshots/Capture.PNG)]
+![Hacash-banner](https://github.com/AsherManangan/cmdwallet/blob/master/screenshots/Capture.PNG)
 Hacash command line wallet usage tutorial
 ===
 The command line wallet is an offline tool. You can use it on a desktop computer that is not connected to the Internet to create accounts,
