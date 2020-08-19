@@ -9,15 +9,13 @@ This tool is absolutely safe, because it will not transmit your password or priv
 
 Because the local command line wallet is not connected to the Internet, it does not support balance query and check. If you need to check the 
 balance of an address, you can check on the [online wallet](explorer.hacashpool.com). Since the operation of checking the balance does not
-involve a password or private key at all, it is safe to check on the online wallet.
-
-
+involve a password or private key at all. 
 
 
 This tutorial will provide the most detailed tutorial for people who do not understand computer technology, and will teach you step by step to 
 achieve operations such as creating an address, constructing a transfer transaction, and submitting a transfer transaction.
 
-###Ready to work
+##Ready to work
 You need to go to hacash.org to download the pre-compiled software, and download the corresponding version of the software 
 according to your operating system category (Windows or Ubuntu). Then decompress the downloaded ZIP files, then enter the decompressed directory, and then run them (double-click to run under windows, Ubuntu needs to press the right mouse button in the program directory, select "open in terminal", and enter).
 
