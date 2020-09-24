@@ -30,6 +30,8 @@ func genTx(ctx ctx.Context, params []string) {
 		gentxs.GenTxCreateSatoshiGenesis(ctx, bodys)
 	case "sendsat": // 确认BTC单向转
 		gentxs.GenTxSimpleTransferSatoshi(ctx, bodys)
+	case "release_lockbls": // 释放锁仓
+		gentxs.GenTxReleaseLockbls(ctx, bodys)
 
 	default:
 		fmt.Println("Sorry, undefined gentx type: " + typename)
