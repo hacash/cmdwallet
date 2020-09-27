@@ -4,16 +4,13 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
+	"github.com/hacash/cmdwallet/toolshell/ctx"
 	base58check "github.com/hacash/core/account"
 	"github.com/hacash/core/actions"
 	"github.com/hacash/core/fields"
 	"github.com/hacash/core/transactions"
-	"github.com/hacash/cmdwallet/toolshell/ctx"
 	"strconv"
 )
-
-
-
 
 /*
 
@@ -28,13 +25,7 @@ gentx sendcash 1MzNY1oA3kfgYi75zquj3SRUPYztzXHzK9 1699oAd32emhfShPDFVs5UY8vJNe2u
 
 
 
- */
-
-
-
-
-
-
+*/
 
 // 创建一笔交易
 func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
@@ -73,8 +64,8 @@ func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
-	newTrs.Fee = *fee // set fee
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Fee = *fee                                      // set fee
 	tranact := actions.NewAction_1_SimpleTransfer(*toAddr, amt)
 	e5 = newTrs.AppendAction(tranact)
 	if e5 != nil {

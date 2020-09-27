@@ -60,7 +60,7 @@ func GenTxReleaseLockbls(ctx ctx.Context, params []string) {
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -169,14 +169,14 @@ func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 		fmt.Printf("start block height %s is error.\n", params[5])
 		return
 	}
-	releaseLockblsAct.EffectBlockHeight = fields.VarInt5(startBlockHeight)
+	releaseLockblsAct.EffectBlockHeight = fields.VarUint5(startBlockHeight)
 
 	stepHeight, e4 := strconv.ParseUint(params[6], 10, 0)
 	if e4 != nil {
 		fmt.Printf("step height %s is error.\n", params[5])
 		return
 	}
-	releaseLockblsAct.LinearBlockNumber = fields.VarInt3(stepHeight)
+	releaseLockblsAct.LinearBlockNumber = fields.VarUint3(stepHeight)
 
 	feeAddress := ctx.IsInvalidAccountAddress(params[7])
 	if feeAddress == nil {
@@ -191,7 +191,7 @@ func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return

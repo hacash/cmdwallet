@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
+	"github.com/hacash/cmdwallet/toolshell/ctx"
 	"github.com/hacash/core/actions"
 	"github.com/hacash/core/crypto/sha3"
 	"github.com/hacash/core/fields"
 	"github.com/hacash/core/transactions"
-	"github.com/hacash/cmdwallet/toolshell/ctx"
 	"strconv"
 )
 
@@ -71,8 +71,8 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
-	newTrs.Fee = *fee // set fee
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Fee = *fee                                      // set fee
 	// 放入action
 	e5 = newTrs.AppendAction(&paychan)
 	if e5 != nil {
@@ -149,7 +149,7 @@ func GenTxClosePaymentChannel(ctx ctx.Context, params []string) {
 
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return

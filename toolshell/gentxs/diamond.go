@@ -3,10 +3,10 @@ package gentxs
 import (
 	"encoding/hex"
 	"fmt"
+	"github.com/hacash/cmdwallet/toolshell/ctx"
 	"github.com/hacash/core/actions"
 	"github.com/hacash/core/fields"
 	"github.com/hacash/core/transactions"
-	"github.com/hacash/cmdwallet/toolshell/ctx"
 	"github.com/hacash/x16rs"
 	"strconv"
 	"strings"
@@ -75,14 +75,14 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	}
 	// 创建 action
 	var dimcreate actions.Action_4_DiamondCreate
-	dimcreate.Number = fields.VarInt3(number)
+	dimcreate.Number = fields.VarUint3(number)
 	dimcreate.Diamond = fields.Bytes6(diamondArgv)
 	dimcreate.PrevHash = blkhash
 	dimcreate.Nonce = fields.Bytes8(noncehash)
 	dimcreate.Address = *address
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -160,7 +160,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	dimtransfer.Address = *address
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -249,14 +249,14 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	var dimtransfer actions.Action_6_OutfeeQuantityDiamondTransfer
 	dimtransfer.FromAddress = *fromaddress
 	dimtransfer.ToAddress = *toaddress
-	dimtransfer.DiamondCount = fields.VarInt1(len(diamonds))
+	dimtransfer.DiamondCount = fields.VarUint1(len(diamonds))
 	dimtransfer.Diamonds = make([]fields.Bytes6, len(diamonds))
 	for i, v := range diamonds {
 		dimtransfer.Diamonds[i] = fields.Bytes6(v)
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return

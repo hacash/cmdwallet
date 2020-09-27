@@ -45,11 +45,11 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 	}
 
 	// 创建action
-	newact := actions.NewAction_8_SimpleSatoshiTransfer(*targetAddress, fields.VarInt8(satoshiAmount))
+	newact := actions.NewAction_8_SimpleSatoshiTransfer(*targetAddress, fields.VarUint8(satoshiAmount))
 
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -102,9 +102,9 @@ gentx btcmove 1 1001 1596702752 0 1 1048576 1EDUeK8NAjrgYhgDFv9NJecn8dNyJJsu3y 8
 
 */
 
-func num(str string) fields.VarInt4 {
+func num(str string) fields.VarUint4 {
 	n, _ := strconv.ParseInt(str, 10, 0)
-	return fields.VarInt4(n)
+	return fields.VarUint4(n)
 }
 
 // 创建发布 转移 BTC
@@ -141,7 +141,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarInt5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
