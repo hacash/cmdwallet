@@ -78,13 +78,13 @@ func RunToolShell() {
 			filename := openLogFile(ctx)
 			fmt.Println("Open to write log file: " + filename)
 			continue
-		}else if currentInputContent == "closelog" {
+		} else if currentInputContent == "closelog" {
 			filename := closeLogFile(ctx)
 			fmt.Println("Close log file: " + filename)
 			continue
 		}
 
-		ctx.LogFileWriteln("\n- - - - - - - - "+time.Now().Format("15:04:05")+" - - - - - - - -\n\n> " + currentInputContent)
+		ctx.LogFileWriteln("\n- - - - - - - - " + time.Now().Format("15:04:05") + " - - - - - - - -\n\n> " + currentInputContent)
 
 		if currentInputContent == "update" {
 			TargetTime = time.Now()
@@ -93,7 +93,7 @@ func RunToolShell() {
 			showAccounts(ctx)
 		} else if currentInputContent == "txs" {
 			showTxs(ctx)
-		}else {
+		} else {
 			// other opration
 			params := strings.Fields(currentInputContent)
 			funcname := params[0]
@@ -139,9 +139,9 @@ func openLogFile(ctx *ctxToolShell) string {
 		os.Exit(0)
 	}
 	abspath = path.Dir(abspath)
-	logfilename := path.Join(abspath, time.Now().Format("2006_01_02_15_04_05") + ".log")
+	logfilename := path.Join(abspath, time.Now().Format("2006_01_02_15_04_05")+".log")
 
-	logfile, err := os.OpenFile(logfilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY,0660)
+	logfile, err := os.OpenFile(logfilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0660)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(0)
@@ -152,7 +152,6 @@ func openLogFile(ctx *ctxToolShell) string {
 	return logfile.Name()
 }
 
-
 func closeLogFile(ctx *ctxToolShell) string {
 	if ctx.logfile == nil {
 		return ""
@@ -162,8 +161,6 @@ func closeLogFile(ctx *ctxToolShell) string {
 	ctx.logfile = nil
 	return name
 }
-
-
 
 /////////////////////////////////////////////////////////
 
@@ -217,7 +214,7 @@ func setPrivateKeyByPassword(ctx *ctxToolShell, params []string) {
 
 // 随机创建私钥
 func createNewPrivateKey(ctx *ctxToolShell, params []string) {
-	acc := account.CreateNewAccount()
+	acc := account.CreateNewRandomAccount()
 	printLoadAddress(ctx, acc)
 }
 
