@@ -91,13 +91,13 @@ func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 
-	sigok, sigerr := trxnew.VerifyNeedSigns(nil)
+	sigok, sigerr := trxnew.VerifyAllNeedSigns()
 	if sigerr != nil {
-		fmt.Println("transaction VerifyNeedSigns error")
+		fmt.Println("transaction VerifyAllNeedSigns error")
 		return
 	}
 	if !sigok {
-		fmt.Println("transaction VerifyNeedSigns fail")
+		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 

@@ -52,7 +52,7 @@ func signTx(ctx ctx.Context, params []string) {
 	}
 
 	// 判断是否完成签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	nosigntip := ""
 	if !sigok || sigerr != nil {
 		nosigntip = " [NOT SIGN COMPLETELY]"

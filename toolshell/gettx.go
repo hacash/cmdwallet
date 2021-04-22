@@ -28,7 +28,7 @@ func getTx(ctx ctx.Context, params []string) {
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
 
 	// 判断是否完成签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	nosigntip := ""
 	if !sigok || sigerr != nil {
 		nosigntip = " [NOT SIGN]"

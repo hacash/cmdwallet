@@ -98,9 +98,9 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 		return
 	}
 	// 检查签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
-		fmt.Println("transaction VerifyNeedSigns fail")
+		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
@@ -176,9 +176,9 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 	// 检查签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
-		fmt.Println("transaction VerifyNeedSigns fail")
+		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
@@ -272,9 +272,9 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 	// 检查签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
-		fmt.Println("transaction VerifyNeedSigns fail")
+		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 

@@ -76,9 +76,9 @@ func GenTxReleaseLockbls(ctx ctx.Context, params []string) {
 		return
 	}
 	// 检查签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
-		fmt.Println("transaction VerifyNeedSigns fail")
+		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
@@ -207,9 +207,9 @@ func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 		return
 	}
 	// 检查签名
-	sigok, sigerr := newTrs.VerifyNeedSigns(nil)
+	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
-		fmt.Println("transaction VerifyNeedSigns fail")
+		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
