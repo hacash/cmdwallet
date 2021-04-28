@@ -98,7 +98,9 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 gentx btcmove <trsno> <block_height> <block_timestamp> <prev_btc> <btc> <add_hac> <origin_address> <trs_btc_tx_hx> <fee_addr> <fee>
 
 // test:
+passwd 123456
 gentx btcmove 1 1001 1596702752 0 1 1048576 1EDUeK8NAjrgYhgDFv9NJecn8dNyJJsu3y 8deb5180a3388fee4991674c62705041616980e76288a8888b65530e41ccf90d 1MzNY1oA3kfgYi75zquj3SRUPYztzXHzK9 HAC1:248
+
 
 */
 
