@@ -104,9 +104,13 @@ gentx btcmove 1 1001 1596702752 0 1 1048576 1EDUeK8NAjrgYhgDFv9NJecn8dNyJJsu3y 8
 
 */
 
-func num(str string) fields.VarUint4 {
+func num4(str string) fields.VarUint4 {
 	n, _ := strconv.ParseInt(str, 10, 0)
 	return fields.VarUint4(n)
+}
+func num5(str string) fields.VarUint5 {
+	n, _ := strconv.ParseInt(str, 10, 0)
+	return fields.VarUint5(n)
 }
 
 // 创建发布 转移 BTC
@@ -116,12 +120,12 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		return
 	}
 	genisisAct := &actions.Action_7_SatoshiGenesis{
-		TransferNo:               num(params[0]),
-		BitcoinBlockHeight:       num(params[1]),
-		BitcoinBlockTimestamp:    num(params[2]),
-		BitcoinEffectiveGenesis:  num(params[3]),
-		BitcoinQuantity:          num(params[4]),
-		AdditionalTotalHacAmount: num(params[5]),
+		TransferNo:               num4(params[0]),
+		BitcoinBlockHeight:       num4(params[1]),
+		BitcoinBlockTimestamp:    num5(params[2]),
+		BitcoinEffectiveGenesis:  num4(params[3]),
+		BitcoinQuantity:          num4(params[4]),
+		AdditionalTotalHacAmount: num4(params[5]),
 		OriginAddress:            nil,
 		BitcoinTransferHash:      nil,
 	}
