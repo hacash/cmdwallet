@@ -66,7 +66,7 @@ func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 	}
 	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	newTrs.Fee = *fee                                      // set fee
-	tranact := actions.NewAction_1_SimpleTransfer(*toAddr, amt)
+	tranact := actions.NewAction_1_SimpleToTransfer(*toAddr, amt)
 	e5 = newTrs.AppendAction(tranact)
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
