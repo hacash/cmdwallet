@@ -157,7 +157,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	// 创建 action
 	var dimtransfer actions.Action_5_DiamondTransfer
 	dimtransfer.Diamond = fields.Bytes6(diamondArgv)
-	dimtransfer.Address = *address
+	dimtransfer.ToAddress = *address
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
 	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
