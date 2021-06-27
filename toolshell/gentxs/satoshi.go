@@ -49,7 +49,7 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -147,7 +147,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return

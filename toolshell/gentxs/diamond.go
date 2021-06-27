@@ -82,7 +82,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	dimcreate.Address = *address
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -160,7 +160,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	dimtransfer.ToAddress = *address
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
@@ -256,7 +256,7 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.VarUint5(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
