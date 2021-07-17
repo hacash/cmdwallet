@@ -249,10 +249,10 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	var dimtransfer actions.Action_6_OutfeeQuantityDiamondTransfer
 	dimtransfer.FromAddress = *fromaddress
 	dimtransfer.ToAddress = *toaddress
-	dimtransfer.DiamondCount = fields.VarUint1(len(diamonds))
-	dimtransfer.Diamonds = make([]fields.Bytes6, len(diamonds))
+	dimtransfer.DiamondList.Count = fields.VarUint1(len(diamonds))
+	dimtransfer.DiamondList.Diamonds = make([]fields.Bytes6, len(diamonds))
 	for i, v := range diamonds {
-		dimtransfer.Diamonds[i] = fields.Bytes6(v)
+		dimtransfer.DiamondList.Diamonds[i] = fields.Bytes6(v)
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
