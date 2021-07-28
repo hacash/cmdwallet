@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/hacash/cmdwallet/toolshell/ctx"
 	"github.com/hacash/core/actions"
-	"github.com/hacash/core/crypto/sha3"
 	"github.com/hacash/core/fields"
 	"github.com/hacash/core/transactions"
 	"strconv"
@@ -63,8 +62,8 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	pcbts, _ := paychan.Serialize()
 	bufs := bytes.NewBuffer(pcbts[16:])
 	bufs.Write([]byte(strconv.FormatUint(ctx.UseTimestamp(), 10)))
-	hx := sha3.Sum256(bufs.Bytes())
-	paychan.ChannelId = hx[0:16]
+	hx := fields.CalculateHash(bufs.Bytes())
+	paychan.ChannelId = fields.Bytes16(hx[0:16])
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*leftAddress)
 	if e5 != nil {
