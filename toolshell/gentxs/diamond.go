@@ -75,8 +75,8 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	}
 	// 创建 action
 	var dimcreate actions.Action_4_DiamondCreate
-	dimcreate.Number = fields.VarUint3(number)
-	dimcreate.Diamond = fields.Bytes6(diamondArgv)
+	dimcreate.Number = fields.DiamondNumber(number)
+	dimcreate.Diamond = fields.DiamondName(diamondArgv)
 	dimcreate.PrevHash = blkhash
 	dimcreate.Nonce = fields.Bytes8(noncehash)
 	dimcreate.Address = *address
@@ -156,7 +156,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	}
 	// 创建 action
 	var dimtransfer actions.Action_5_DiamondTransfer
-	dimtransfer.Diamond = fields.Bytes6(diamondArgv)
+	dimtransfer.Diamond = fields.DiamondName(diamondArgv)
 	dimtransfer.ToAddress = *address
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
@@ -250,9 +250,9 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	dimtransfer.FromAddress = *fromaddress
 	dimtransfer.ToAddress = *toaddress
 	dimtransfer.DiamondList.Count = fields.VarUint1(len(diamonds))
-	dimtransfer.DiamondList.Diamonds = make([]fields.Bytes6, len(diamonds))
+	dimtransfer.DiamondList.Diamonds = make([]fields.DiamondName, len(diamonds))
 	for i, v := range diamonds {
-		dimtransfer.DiamondList.Diamonds[i] = fields.Bytes6(v)
+		dimtransfer.DiamondList.Diamonds[i] = fields.DiamondName(v)
 	}
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
