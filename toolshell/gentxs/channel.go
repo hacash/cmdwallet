@@ -63,7 +63,7 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	bufs := bytes.NewBuffer(pcbts[16:])
 	bufs.Write([]byte(strconv.FormatUint(ctx.UseTimestamp(), 10)))
 	hx := fields.CalculateHash(bufs.Bytes())
-	paychan.ChannelId = fields.Bytes16(hx[0:16])
+	paychan.ChannelId = fields.ChannelId(hx[0:16])
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*leftAddress)
 	if e5 != nil {
