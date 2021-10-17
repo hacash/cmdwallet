@@ -45,7 +45,7 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 	}
 
 	// 创建action
-	newact := actions.NewAction_8_SimpleSatoshiTransfer(*targetAddress, fields.VarUint8(satoshiAmount))
+	newact := actions.NewAction_8_SimpleSatoshiTransfer(*targetAddress, fields.Satoshi(satoshiAmount))
 
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
