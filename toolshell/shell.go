@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/hacash/core/account"
-	"github.com/hacash/core/interfaces"
+	"github.com/hacash/core/interfacev2"
 	"os"
 	"path"
 	"path/filepath"
@@ -16,7 +16,7 @@ import (
 var (
 	MyAccounts          = make(map[string]account.Account, 0)
 	AllPrivateKeyBytes  = make(map[string][]byte, 0)
-	Transactions        = make(map[string]interfaces.Transaction, 0)
+	Transactions        = make(map[string]interfacev2.Transaction, 0)
 	TargetTime          time.Time // 使用的时间
 	currentInputContent string
 )
