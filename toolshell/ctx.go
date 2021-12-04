@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/hacash/core/fields"
-	"github.com/hacash/core/interfacev2"
+	"github.com/hacash/core/interfaces"
 	"os"
 )
 
@@ -83,11 +83,11 @@ func (c *ctxToolShell) GetAllPrivateKeyBytes() map[string][]byte {
 	return AllPrivateKeyBytes
 }
 
-func (c *ctxToolShell) SetTxToRecord(hash_no_fee []byte, tx interfacev2.Transaction) { // 记录交易
+func (c *ctxToolShell) SetTxToRecord(hash_no_fee []byte, tx interfaces.Transaction) { // 记录交易
 	Transactions[string(hash_no_fee)] = tx
 }
 
-func (c *ctxToolShell) GetTxFromRecord(hash_no_fee []byte) interfacev2.Transaction { // 获取交易
+func (c *ctxToolShell) GetTxFromRecord(hash_no_fee []byte) interfaces.Transaction { // 获取交易
 	if tx, ok := Transactions[string(hash_no_fee)]; ok {
 		return tx
 	} else {
