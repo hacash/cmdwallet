@@ -9,11 +9,7 @@ import (
 )
 
 /*
-
-
 >sign <txhx> addr1 addr2 ...
-
-
 */
 
 func signTx(ctx ctx.Context, params []string) {
@@ -21,6 +17,7 @@ func signTx(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	var adln = len(params) - 1
 	var addresslist = make([]fields.Address, 0, adln)
 	for i := 1; i < len(params); i++ {
@@ -30,16 +27,19 @@ func signTx(ctx ctx.Context, params []string) {
 		}
 		addresslist = append(addresslist, *address)
 	}
+
 	txhashnofee, err := hex.DecodeString(params[0])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+
 	newTrs := ctx.GetTxFromRecord(txhashnofee)
 	if newTrs == nil {
 		fmt.Printf(" tx <%s> not find!", params[0])
 		return
 	}
+
 	// ok
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
 
@@ -65,6 +65,7 @@ func signTx(ctx ctx.Context, params []string) {
 		fmt.Println("transaction serialize error, " + e7.Error())
 		return
 	}
+
 	// print
 	ctx.Println("body length " + strconv.Itoa(len(bodybytes)) + " bytes, hex body is:")
 	ctx.Println("-------- TRANSACTION BODY" + nosigntip + " START --------")
@@ -73,5 +74,4 @@ func signTx(ctx ctx.Context, params []string) {
 
 	// 记录
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
-
 }

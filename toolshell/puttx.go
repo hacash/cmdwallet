@@ -12,11 +12,13 @@ func putTx(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	txbody, err := hex.DecodeString(params[0])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+
 	// 解析交易
 	newTrs, _, err2 := transactions.ParseTransaction(txbody, 0)
 	if err2 != nil {
@@ -25,12 +27,10 @@ func putTx(ctx ctx.Context, params []string) {
 	}
 
 	// 交易加入
-
 	// ok
 	ctx.Println("transaction append success! ")
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
 
 	// 记录
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
-
 }

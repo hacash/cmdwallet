@@ -21,7 +21,6 @@ var (
 	currentInputContent string
 )
 
-////////////////////////////////////
 
 var welcomeContent = `
 Welcome to Hacash tool shell, you can:
@@ -36,7 +35,6 @@ exit, quit
 --------`
 
 func RunToolShell() {
-
 	var ctx = &ctxToolShell{
 		logfile: nil,
 	}
@@ -59,8 +57,9 @@ func RunToolShell() {
 			time.Sleep(time.Second)
 			continue
 		}
-		//fmt.Scanln(&currentInputContent)
+
 		currentInputContent = strings.TrimSpace(input)
+
 		// empty
 		if currentInputContent == "" {
 			continue
@@ -125,10 +124,7 @@ func RunToolShell() {
 	}
 }
 
-/////////////////////////////////////////////////
-
 func openLogFile(ctx *ctxToolShell) string {
-
 	if ctx.logfile != nil {
 		return ctx.logfile.Name()
 	}
@@ -156,19 +152,19 @@ func closeLogFile(ctx *ctxToolShell) string {
 	if ctx.logfile == nil {
 		return ""
 	}
+
 	ctx.logfile.Close()
 	name := ctx.logfile.Name()
 	ctx.logfile = nil
 	return name
 }
 
-/////////////////////////////////////////////////////////
-
 func showAccounts(ctx *ctxToolShell) {
 	if len(MyAccounts) == 0 {
 		fmt.Println("none")
 		return
 	}
+
 	for k, _ := range MyAccounts {
 		ctx.Print(k + " ")
 	}
@@ -180,6 +176,7 @@ func showTxs(ctx *ctxToolShell) {
 		fmt.Println("none")
 		return
 	}
+
 	for k, _ := range Transactions {
 		ctx.Println(hex.EncodeToString([]byte(k)))
 	}
@@ -190,23 +187,25 @@ func setPrivateKey(ctx *ctxToolShell, params []string) {
 		if strings.HasPrefix(hexstr, "0x") {
 			hexstr = string([]byte(hexstr)[2:]) // drop 0x
 		}
+
 		_, e0 := hex.DecodeString(hexstr)
 		if e0 != nil {
 			fmt.Println("Private Key '" + hexstr + "' is error")
 			return
 		}
+
 		acc, e1 := account.GetAccountByPriviteKeyHex(hexstr)
 		if e1 != nil {
 			fmt.Println("Private Key '" + hexstr + "' is error")
 			return
 		}
+
 		printLoadAddress(ctx, acc)
 	}
 }
 
 func setPrivateKeyByPassword(ctx *ctxToolShell, params []string) {
 	for _, passwd := range params {
-		//fmt.Println(passwd)
 		acc := account.CreateAccountByPassword(passwd)
 		printLoadAddress(ctx, acc)
 	}
