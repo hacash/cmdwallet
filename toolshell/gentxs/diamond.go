@@ -14,16 +14,12 @@ import (
 
 /*
 
-
 gentx diamond ${DIAMOND} ${NUMBER} ${PrevHash} ${Nonce} ${Address} ${feeAddress} ${FEE}
-
 
 passwd 123456
 passwd 12345678
 gentx diamond NHMYYM 1 000000077790ba2fcdeaef4a4299d9b667135bac577ce204dee8388f1b97f7e6 0100000001552c71 1271438866CSDpJUqrnchoJAiGGBFSQhjd 1EDUeK8NAjrgYhgDFv9NJecn8dNyJJsu3y HCX2:244
-
 gentx diamond_transfer NHMYYM 1MzNY1oA3kfgYi75zquj3SRUPYztzXHzK9 1271438866CSDpJUqrnchoJAiGGBFSQhjd HCX1:244
-
 
 */
 
@@ -33,6 +29,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	diamondArgv := params[0]
 	numberArgv := params[1]
 	prevHashArgv := params[2]
@@ -40,39 +37,47 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	addressArgv := params[4]
 	feeAddressArgv := params[5]
 	feeArgv := params[6]
+
 	// 检查字段
 	_, dddok := x16rs.IsDiamondHashResultString("0000000000" + diamondArgv)
 	if !dddok {
 		fmt.Printf("%s is not diamond value.\n", diamondArgv)
 		return
 	}
+
 	number, e3 := strconv.ParseUint(numberArgv, 10, 0)
 	if e3 != nil {
 		fmt.Printf("number %s is error.\n", numberArgv)
 		return
 	}
+
 	noncehash, e3 := hex.DecodeString(nonceArgv)
 	if e3 != nil {
 		fmt.Printf("nonce %s format is error.\n", nonceArgv)
 		return
 	}
+
 	address := ctx.IsInvalidAccountAddress(addressArgv)
 	if address == nil {
 		return
 	}
+
 	feeAddress := ctx.IsInvalidAccountAddress(feeAddressArgv)
 	if feeAddress == nil {
 		return
 	}
+
 	feeAmount := ctx.IsInvalidAmountString(feeArgv)
 	if feeAmount == nil {
 		return
 	}
+
 	blkhash, e0 := hex.DecodeString(prevHashArgv)
 	if e0 != nil {
 		fmt.Println("block hash format error")
 		return
 	}
+
 	// 创建 action
 	var dimcreate actions.Action_4_DiamondCreate
 	dimcreate.Number = fields.DiamondNumber(number)
@@ -80,6 +85,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	dimcreate.PrevHash = blkhash
 	dimcreate.Nonce = fields.Bytes8(noncehash)
 	dimcreate.Address = *address
+
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
 	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
@@ -88,6 +94,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 		return
 	}
 	newTrs.Fee = *feeAmount // set fee
+
 	// 放入action
 	newTrs.AppendAction(&dimcreate)
 
@@ -97,6 +104,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 		fmt.Println("sign transaction error, " + e6.Error())
 		return
 	}
+
 	// 检查签名
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
@@ -117,14 +125,11 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	fmt.Println("body length " + strconv.Itoa(len(bodybytes)) + " bytes, hex body is:")
 	fmt.Println("-------- TRANSACTION BODY START --------")
 	fmt.Println(hex.EncodeToString(bodybytes))
-	//fmt.Println( hex.EncodeToString( bodybytes2 ) )
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
 	// 记录
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 // 转移钻石
 func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
@@ -132,6 +137,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	diamondArgv := params[0]
 	addressArgv := params[1]
 	feeAddressArgv := params[2]
@@ -142,18 +148,22 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Printf("%s is not diamond value.\n", diamondArgv)
 		return
 	}
+
 	address := ctx.IsInvalidAccountAddress(addressArgv)
 	if address == nil {
 		return
 	}
+
 	feeAddress := ctx.IsInvalidAccountAddress(feeAddressArgv)
 	if feeAddress == nil {
 		return
 	}
+
 	feeAmount := ctx.IsInvalidAmountString(feeArgv)
 	if feeAmount == nil {
 		return
 	}
+
 	// 创建 action
 	var dimtransfer actions.Action_5_DiamondTransfer
 	dimtransfer.Diamond = fields.DiamondName(diamondArgv)
@@ -165,6 +175,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
+
 	newTrs.Fee = *feeAmount // set fee
 	// 放入action
 	newTrs.AppendAction(&dimtransfer)
@@ -175,6 +186,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("sign transaction error, " + e6.Error())
 		return
 	}
+
 	// 检查签名
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
@@ -195,7 +207,6 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	fmt.Println("body length " + strconv.Itoa(len(bodybytes)) + " bytes, hex body is:")
 	fmt.Println("-------- TRANSACTION BODY START --------")
 	fmt.Println(hex.EncodeToString(bodybytes))
-	//fmt.Println( hex.EncodeToString( bodybytes2 ) )
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
 	// 记录
@@ -210,17 +221,20 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	fromAddressArgv := params[0]
 	toAddressArgv := params[1]
 	diamondsArgv := params[2]
 	feeAddressArgv := params[3]
 	feeArgv := params[4]
+
 	// 检查字段
 	diamonds := strings.Split(diamondsArgv, ",")
 	if len(diamonds) > 200 {
 		fmt.Printf("diamonds number is too much.\n")
 		return
 	}
+
 	for _, diamond := range diamonds {
 		_, dddok := x16rs.IsDiamondHashResultString("0000000000" + diamond)
 		if !dddok {
@@ -233,18 +247,22 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	if fromaddress == nil {
 		return
 	}
+
 	toaddress := ctx.IsInvalidAccountAddress(toAddressArgv)
 	if toaddress == nil {
 		return
 	}
+
 	feeAddress := ctx.IsInvalidAccountAddress(feeAddressArgv)
 	if feeAddress == nil {
 		return
 	}
+
 	feeAmount := ctx.IsInvalidAmountString(feeArgv)
 	if feeAmount == nil {
 		return
 	}
+
 	// 创建 action
 	var dimtransfer actions.Action_6_OutfeeQuantityDiamondTransfer
 	dimtransfer.FromAddress = *fromaddress
@@ -254,6 +272,7 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	for i, v := range diamonds {
 		dimtransfer.DiamondList.Diamonds[i] = fields.DiamondName(v)
 	}
+
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
 	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
@@ -262,6 +281,7 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 	newTrs.Fee = *feeAmount // set fee
+
 	// 放入action
 	newTrs.AppendAction(&dimtransfer)
 
@@ -271,6 +291,7 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("sign transaction error, " + e6.Error())
 		return
 	}
+
 	// 检查签名
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
@@ -284,7 +305,6 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		fmt.Println("transaction serialize error, " + e7.Error())
 		return
 	}
-	//rrrtrs, _ := blocks.ParseTransaction(bodybytes, 0)
 
 	// ok
 	ctx.Println("transaction create success! ")
@@ -292,7 +312,6 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	ctx.Println("body length " + strconv.Itoa(len(bodybytes)) + " bytes, hex body is:")
 	ctx.Println("-------- TRANSACTION BODY START --------")
 	ctx.Println(hex.EncodeToString(bodybytes))
-	//fmt.Println( hex.EncodeToString( bodybytes2 ) )
 	ctx.Println("-------- TRANSACTION BODY END   --------")
 
 	// 记录

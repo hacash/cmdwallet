@@ -11,6 +11,7 @@ func genTx(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	typename := params[0]
 	bodys := params[1:]
 	switch typename {
@@ -38,5 +39,4 @@ func genTx(ctx ctx.Context, params []string) {
 	default:
 		fmt.Println("Sorry, undefined gentx type: " + typename)
 	}
-
 }

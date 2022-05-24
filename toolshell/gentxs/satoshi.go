@@ -54,6 +54,7 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
+
 	newTrs.Fee = *feeAmount // set fee
 	// 放入action
 	newTrs.AppendAction(newact)
@@ -64,6 +65,7 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 		fmt.Println("sign transaction error, " + e6.Error())
 		return
 	}
+
 	// 检查签名
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
@@ -84,14 +86,12 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 	fmt.Println("body length " + strconv.Itoa(len(bodybytes)) + " bytes, hex body is:")
 	fmt.Println("-------- TRANSACTION BODY START --------")
 	fmt.Println(hex.EncodeToString(bodybytes))
-	//fmt.Println( hex.EncodeToString( bodybytes2 ) )
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
 	// 记录
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
-////////////////////////////////////////////////////////
 
 /*
 
@@ -108,6 +108,7 @@ func num4(str string) fields.VarUint4 {
 	n, _ := strconv.ParseInt(str, 10, 0)
 	return fields.VarUint4(n)
 }
+
 func num5(str string) fields.VarUint5 {
 	n, _ := strconv.ParseInt(str, 10, 0)
 	return fields.VarUint5(n)
@@ -119,6 +120,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	genisisAct := &actions.Action_7_SatoshiGenesis{
 		TransferNo:               num4(params[0]),
 		BitcoinBlockHeight:       num4(params[1]),
@@ -134,6 +136,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	if originAddress == nil {
 		return
 	}
+
 	genisisAct.OriginAddress = *originAddress
 	genisisAct.BitcoinTransferHash, _ = hex.DecodeString(params[7])
 
@@ -141,10 +144,12 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	if feeAddress == nil {
 		return
 	}
+
 	feeAmount := ctx.IsInvalidAmountString(params[9])
 	if feeAmount == nil {
 		return
 	}
+
 	// 创建交易
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
 	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
@@ -152,6 +157,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
+
 	newTrs.Fee = *feeAmount // set fee
 	// 放入action
 	newTrs.AppendAction(genisisAct)
@@ -162,6 +168,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		fmt.Println("sign transaction error, " + e6.Error())
 		return
 	}
+
 	// 检查签名
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
@@ -182,7 +189,6 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	fmt.Println("body length " + strconv.Itoa(len(bodybytes)) + " bytes, hex body is:")
 	fmt.Println("-------- TRANSACTION BODY START --------")
 	fmt.Println(hex.EncodeToString(bodybytes))
-	//fmt.Println( hex.EncodeToString( bodybytes2 ) )
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
 	// 记录

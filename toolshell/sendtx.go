@@ -10,9 +10,7 @@ import (
 )
 
 /*
-
 sendtx <txhx> 127.0.0.1:3338
-
 */
 
 // 发送一笔交易给矿工
@@ -21,6 +19,7 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 		fmt.Println("params not enough")
 		return
 	}
+
 	txhash, e0 := hex.DecodeString(params[0])
 	if e0 != nil {
 		fmt.Println("tx hash format error")
@@ -33,12 +32,14 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 	if tx == nil {
 		return
 	}
+
 	sigok, e2 := tx.VerifyAllNeedSigns()
 	if e2 != nil || !sigok {
 		fmt.Println("Tx sign error")
 		fmt.Println(e2)
 		return
 	}
+
 	// post 发送
 	body := new(bytes.Buffer)
 	body.Write([]byte{0, 0, 0, 1}) // opcode
@@ -48,9 +49,9 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 		fmt.Println(e9)
 		return
 	}
+
 	// 生成交易
 	// transactions.ParseTransaction(txbytes, 0)
-
 	body.Write(txbytes)
 	req, e3 := http.NewRequest("POST", "http://"+minerAddress+"/operate", body)
 	if e3 != nil {
@@ -58,6 +59,7 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 		fmt.Println(e3)
 		return
 	}
+
 	client := &http.Client{}
 	resp, e4 := client.Do(req)
 	if e4 != nil {
@@ -65,6 +67,7 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 		fmt.Println(e4)
 		return
 	}
+
 	defer resp.Body.Close()
 	// ok
 	fmt.Println("add tx to " + minerAddress + ", the response is:")

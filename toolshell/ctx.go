@@ -9,10 +9,6 @@ import (
 	"os"
 )
 
-/*
-
- */
-
 type ctxToolShell struct {
 	logfile *os.File
 }
@@ -20,13 +16,13 @@ type ctxToolShell struct {
 func handleArgvToBytes(spx string, end string, argv ...interface{}) []byte {
 	buf := bytes.NewBuffer([]byte{})
 	for _, a := range argv {
-		//fmt.Println(reflect.ValueOf(a).Type().String())
 		if str, ok := a.(string); ok {
 			buf.Write([]byte(str + spx))
 		} else if bts, ok := a.([]byte); ok {
 			buf.Write(bts)
 		}
 	}
+
 	buf.Write([]byte(end))
 	return buf.Bytes()
 }
@@ -58,6 +54,7 @@ func (c *ctxToolShell) NotLoadedYetAccountAddress(addr string) bool {
 		fmt.Println("Account " + addr + " need to be loaded")
 		return true
 	}
+
 	return false
 }
 
@@ -67,6 +64,7 @@ func (c *ctxToolShell) IsInvalidAccountAddress(addr string) *fields.Address {
 		fmt.Println(err)
 		return nil
 	}
+
 	return address
 }
 
@@ -76,6 +74,7 @@ func (c *ctxToolShell) IsInvalidAmountString(amtstr string) *fields.Amount {
 		fmt.Printf("amount \"%s\" format error or over range, the right example is 'HCX1:248' for one coin\n", amtstr)
 		return nil
 	}
+
 	return amt
 }
 
