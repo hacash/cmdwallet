@@ -16,7 +16,7 @@ gentx gentx ${FROM_ADDRESS} ${TO_ADDRESS} ${SATOSHI_AMOUNT} ${FEE}
 
 */
 
-// satoshi 普通转账
+// Satoshi general transfer
 func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 	if len(params) < 4 {
 		fmt.Println("params not enough")
@@ -44,19 +44,19 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建action
+	// Create action
 	newact := actions.NewAction_8_SimpleSatoshiTransfer(*targetAddress, fields.Satoshi(satoshiAmount))
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
 	newTrs.Fee = *feeAmount // set fee
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(newact)
 
 	// sign
@@ -66,14 +66,14 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -88,7 +88,7 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
@@ -114,7 +114,7 @@ func num5(str string) fields.VarUint5 {
 	return fields.VarUint5(n)
 }
 
-// 创建发布 转移 BTC
+// Create publish transfer BTC
 func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	if len(params) < 10 {
 		fmt.Println("params not enough")
@@ -150,16 +150,16 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
 	newTrs.Fee = *feeAmount // set fee
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(genisisAct)
 
 	// sign
@@ -169,14 +169,14 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -191,6 +191,6 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }

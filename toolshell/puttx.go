@@ -19,18 +19,18 @@ func putTx(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 解析交易
+	// Parsing transactions
 	newTrs, _, err2 := transactions.ParseTransaction(txbody, 0)
 	if err2 != nil {
 		fmt.Println(err2)
 		return
 	}
 
-	// 交易加入
+	// Transaction join
 	// ok
 	ctx.Println("transaction append success! ")
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }

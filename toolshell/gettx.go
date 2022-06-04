@@ -27,7 +27,7 @@ func getTx(ctx ctx.Context, params []string) {
 	// ok
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
 
-	// 判断是否完成签名
+	// Judge whether the signature is completed
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	nosigntip := ""
 	if !sigok || sigerr != nil {
@@ -46,7 +46,7 @@ func getTx(ctx ctx.Context, params []string) {
 	ctx.Println(hex.EncodeToString(bodybytes))
 	ctx.Println("-------- TRANSACTION BODY" + nosigntip + " END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 
 }

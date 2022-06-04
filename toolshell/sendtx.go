@@ -13,7 +13,7 @@ import (
 sendtx <txhx> 127.0.0.1:3338
 */
 
-// 发送一笔交易给矿工
+// Send a transaction to the miner
 func sendTxToMiner(ctx ctx.Context, params []string) {
 	if len(params) < 2 {
 		fmt.Println("params not enough")
@@ -40,7 +40,7 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// post 发送
+	// Post send
 	body := new(bytes.Buffer)
 	body.Write([]byte{0, 0, 0, 1}) // opcode
 	txbytes, e9 := tx.Serialize()
@@ -50,7 +50,7 @@ func sendTxToMiner(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 生成交易
+	// Generate transaction
 	// transactions.ParseTransaction(txbytes, 0)
 	body.Write(txbytes)
 	req, e3 := http.NewRequest("POST", "http://"+minerAddress+"/operate", body)

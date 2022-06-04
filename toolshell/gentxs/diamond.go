@@ -23,7 +23,7 @@ gentx diamond_transfer NHMYYM 1MzNY1oA3kfgYi75zquj3SRUPYztzXHzK9 1271438866CSDpJ
 
 */
 
-// 创建钻石
+// Create diamond
 func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	if len(params) < 7 {
 		fmt.Println("params not enough")
@@ -38,7 +38,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	feeAddressArgv := params[5]
 	feeArgv := params[6]
 
-	// 检查字段
+	// Check field
 	_, dddok := x16rs.IsDiamondHashResultString("0000000000" + diamondArgv)
 	if !dddok {
 		fmt.Printf("%s is not diamond value.\n", diamondArgv)
@@ -78,7 +78,7 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建 action
+	// Create action
 	var dimcreate actions.Action_4_DiamondCreate
 	dimcreate.Number = fields.DiamondNumber(number)
 	dimcreate.Diamond = fields.DiamondName(diamondArgv)
@@ -86,16 +86,16 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	dimcreate.Nonce = fields.Bytes8(noncehash)
 	dimcreate.Address = *address
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 	newTrs.Fee = *feeAmount // set fee
 
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(&dimcreate)
 
 	// sign
@@ -105,14 +105,14 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -127,11 +127,11 @@ func GenTxCreateDiamond(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
-// 转移钻石
+// Transfer diamond
 func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	if len(params) < 4 {
 		fmt.Println("params not enough")
@@ -142,7 +142,7 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	addressArgv := params[1]
 	feeAddressArgv := params[2]
 	feeArgv := params[3]
-	// 检查字段
+	// Check field
 	_, dddok := x16rs.IsDiamondHashResultString("0000000000" + diamondArgv)
 	if !dddok {
 		fmt.Printf("%s is not diamond value.\n", diamondArgv)
@@ -164,20 +164,20 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建 action
+	// Create action
 	var dimtransfer actions.Action_5_DiamondTransfer
 	dimtransfer.Diamond = fields.DiamondName(diamondArgv)
 	dimtransfer.ToAddress = *address
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
 	newTrs.Fee = *feeAmount // set fee
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(&dimtransfer)
 
 	// sign
@@ -187,14 +187,14 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -209,13 +209,13 @@ func GenTxDiamondTransfer(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-// 批量转移钻石
+// Bulk transfer of diamonds
 func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	if len(params) < 5 {
 		fmt.Println("params not enough")
@@ -228,7 +228,7 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	feeAddressArgv := params[3]
 	feeArgv := params[4]
 
-	// 检查字段
+	// Check field
 	diamonds := strings.Split(diamondsArgv, ",")
 	if len(diamonds) > 200 {
 		fmt.Printf("diamonds number is too much.\n")
@@ -263,7 +263,7 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建 action
+	// Create action
 	var dimtransfer actions.Action_6_OutfeeQuantityDiamondTransfer
 	dimtransfer.FromAddress = *fromaddress
 	dimtransfer.ToAddress = *toaddress
@@ -273,16 +273,16 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		dimtransfer.DiamondList.Diamonds[i] = fields.DiamondName(v)
 	}
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 	newTrs.Fee = *feeAmount // set fee
 
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(&dimtransfer)
 
 	// sign
@@ -292,14 +292,14 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -314,6 +314,6 @@ func GenTxOutfeeQuantityDiamondTransfer(ctx ctx.Context, params []string) {
 	ctx.Println(hex.EncodeToString(bodybytes))
 	ctx.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }

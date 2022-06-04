@@ -43,7 +43,7 @@ func signTx(ctx ctx.Context, params []string) {
 	// ok
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
 
-	// 执行签名
+	// Execute signature
 	// sign  // 并且加入新增的需要签名的数据
 	e6 := newTrs.FillNeedSigns(ctx.GetAllPrivateKeyBytes(), addresslist)
 	if e6 != nil {
@@ -51,7 +51,7 @@ func signTx(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 判断是否完成签名
+	// Judge whether the signature is completed
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	nosigntip := ""
 	if !sigok || sigerr != nil {
@@ -72,6 +72,6 @@ func signTx(ctx ctx.Context, params []string) {
 	ctx.Println(hex.EncodeToString(bodybytes))
 	ctx.Println("-------- TRANSACTION BODY" + nosigntip + " END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
