@@ -82,11 +82,11 @@ func (c *ctxToolShell) GetAllPrivateKeyBytes() map[string][]byte {
 	return AllPrivateKeyBytes
 }
 
-func (c *ctxToolShell) SetTxToRecord(hash_no_fee []byte, tx interfaces.Transaction) { // 记录交易
+func (c *ctxToolShell) SetTxToRecord(hash_no_fee []byte, tx interfaces.Transaction) { // Record transactions
 	Transactions[string(hash_no_fee)] = tx
 }
 
-func (c *ctxToolShell) GetTxFromRecord(hash_no_fee []byte) interfaces.Transaction { // 获取交易
+func (c *ctxToolShell) GetTxFromRecord(hash_no_fee []byte) interfaces.Transaction { // Acquire transaction
 	if tx, ok := Transactions[string(hash_no_fee)]; ok {
 		return tx
 	} else {
@@ -95,6 +95,6 @@ func (c *ctxToolShell) GetTxFromRecord(hash_no_fee []byte) interfaces.Transactio
 	}
 }
 
-func (c *ctxToolShell) UseTimestamp() uint64 { // 当前使用的时间戳
+func (c *ctxToolShell) UseTimestamp() uint64 { // Currently used timestamp
 	return uint64(TargetTime.Unix())
 }

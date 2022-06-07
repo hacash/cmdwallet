@@ -6,13 +6,13 @@ import (
 )
 
 type Context interface {
-	NotLoadedYetAccountAddress(string) bool         // 检测账户是否已经登录
-	IsInvalidAccountAddress(string) *fields.Address // 检测是否为一个合法的账户名
-	IsInvalidAmountString(string) *fields.Amount    // 检测是否为一个合法的金额数量
-	GetAllPrivateKeyBytes() map[string][]byte       // 获取全部私钥，用于填充签名
-	SetTxToRecord([]byte, interfaces.Transaction)   // 记录交易
-	GetTxFromRecord([]byte) interfaces.Transaction  // 获取交易
-	UseTimestamp() uint64                           // 当前使用的时间戳
+	NotLoadedYetAccountAddress(string) bool         // Check whether the account has been logged in
+	IsInvalidAccountAddress(string) *fields.Address // Check whether it is a legal account name
+	IsInvalidAmountString(string) *fields.Amount    // Check whether it is a legal amount quantity
+	GetAllPrivateKeyBytes() map[string][]byte       // Get all private keys for filling in signatures
+	SetTxToRecord([]byte, interfaces.Transaction)   // Record transactions
+	GetTxFromRecord([]byte) interfaces.Transaction  // Acquire transaction
+	UseTimestamp() uint64                           // Currently used timestamp
 
 	//////////////////////////////////////////////////////////////////
 

@@ -20,7 +20,7 @@ gentx release_lockbls 000000000000000000000000000000000001 HAC1024:248 1MzNY1oA3
 
 */
 
-// 释放线性锁仓
+// Release linear lock
 func GenTxReleaseLockbls(ctx ctx.Context, params []string) {
 	if len(params) < 4 {
 		fmt.Println("params not enough")
@@ -61,16 +61,16 @@ func GenTxReleaseLockbls(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
 	newTrs.Fee = *feeAmount // set fee
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(releaseLockblsAct)
 
 	// sign
@@ -80,14 +80,14 @@ func GenTxReleaseLockbls(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -102,7 +102,7 @@ func GenTxReleaseLockbls(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
@@ -119,7 +119,7 @@ gentx release_lockbls f42dfb649607dd5d3f8c7623048c9c063d53 HAC45:248 1MzNY1oA3kf
 
 */
 
-// 创建线性锁仓
+// Create linear lock
 func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 	if len(params) < 4 {
 		fmt.Println("params not enough")
@@ -195,16 +195,16 @@ func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
 	newTrs.Fee = *feeAmount // set fee
-	// 放入action
+	// Put in action
 	newTrs.AppendAction(releaseLockblsAct)
 
 	// sign
@@ -214,14 +214,14 @@ func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 检查签名
+	// Check signature
 	sigok, sigerr := newTrs.VerifyAllNeedSigns()
 	if sigerr != nil || !sigok {
 		fmt.Println("transaction VerifyAllNeedSigns fail")
 		return
 	}
 
-	// 数据化
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -236,6 +236,6 @@ func GenTxCreateLockbls(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }

@@ -20,7 +20,7 @@ passwd 123456
 gentx sendcash 1MzNY1oA3kfgYi75zquj3SRUPYztzXHzK9 1699oAd32emhfShPDFVs5UY8vJNe2u42Fz 1:248 1:244
 */
 
-// 创建一笔交易
+// Create a transaction
 func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 	if len(params) < 4 {
 		fmt.Println("params not enough")
@@ -64,7 +64,7 @@ func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 		return
 	}
 
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	newTrs.Fee = *fee                                              // set fee
 	tranact := actions.NewAction_1_SimpleToTransfer(*toAddr, amt)
 	e5 = newTrs.AppendAction(tranact)
@@ -112,6 +112,6 @@ func GenTxSimpleTransfer(ctx ctx.Context, params []string) {
 	ctx.Println(hex.EncodeToString(bodybytes))
 	ctx.Println("-------- TRANSACTION BODY END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }

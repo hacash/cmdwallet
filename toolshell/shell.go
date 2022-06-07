@@ -17,7 +17,7 @@ var (
 	MyAccounts          = make(map[string]account.Account, 0)
 	AllPrivateKeyBytes  = make(map[string][]byte, 0)
 	Transactions        = make(map[string]interfaces.Transaction, 0)
-	TargetTime          time.Time // 使用的时间
+	TargetTime          time.Time // Time used
 	currentInputContent string
 )
 
@@ -211,7 +211,7 @@ func setPrivateKeyByPassword(ctx *ctxToolShell, params []string) {
 	}
 }
 
-// 随机创建私钥
+// Create private key randomly
 func createNewPrivateKey(ctx *ctxToolShell, params []string) {
 	acc := account.CreateNewRandomAccount()
 	printLoadAddress(ctx, acc)

@@ -21,7 +21,7 @@ gentx paychan 1EDUeK8NAjrgYhgDFv9NJecn8dNyJJsu3y HCX1:248 1MzNY1oA3kfgYi75zquj3S
 
 */
 
-// 创建支付通道
+// Create payment channel
 func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	if len(params) < 5 {
 		fmt.Println("params not enough")
@@ -34,7 +34,7 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	rightAmountArgv := params[3]
 	feeArgv := params[4]
 
-	// 检查字段
+	// Check field
 	leftAddress := ctx.IsInvalidAccountAddress(leftAddressArgv)
 	if leftAddress == nil {
 		return
@@ -60,7 +60,7 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 开始拼装 action
+	// Start assembling action
 	var paychan actions.Action_2_OpenPaymentChannel
 	paychan.LeftAddress = *leftAddress
 	paychan.LeftAmount = *leftAmount
@@ -72,23 +72,23 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	hx := fields.CalculateHash(bufs.Bytes())
 	paychan.ChannelId = fields.ChannelId(hx[0:16])
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*leftAddress)
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	newTrs.Fee = *fee                                              // set fee
 
-	// 放入action
+	// Put in action
 	e5 = newTrs.AppendAction(&paychan)
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
-	// 打印 hash 签名数据
+	// Print hash signature data
 	// ok
 	ctx.Println("transaction create success! ")
 	ctx.Println("hash: <" + hex.EncodeToString(newTrs.Hash()) + ">, hash_with_fee: <" + hex.EncodeToString(newTrs.HashWithFee()) + ">")
@@ -105,7 +105,7 @@ func GenTxCreatePaymentChannel(ctx ctx.Context, params []string) {
 	ctx.Println(hex.EncodeToString(bodybytes))
 	ctx.Println("-------- TRANSACTION BODY [NOT SIGN] END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
@@ -117,7 +117,7 @@ passwd 12345678
 gentx paychan_close d952144400ad6f5ff3da594a357b1dab 1EDUeK8NAjrgYhgDFv9NJecn8dNyJJsu3y HCX1:244
 */
 
-// 关闭结算支付通道
+// Close settlement payment channel
 func GenTxClosePaymentChannel(ctx ctx.Context, params []string) {
 	if len(params) < 1 {
 		fmt.Println("params not enough")
@@ -128,7 +128,7 @@ func GenTxClosePaymentChannel(ctx ctx.Context, params []string) {
 	feeAddressArgv := params[1]
 	feeArgv := params[2]
 
-	// 检查字段
+	// Check field
 	channelhash, e3 := hex.DecodeString(channelIdArgv)
 	if e3 != nil || len(channelhash) != 16 {
 		fmt.Printf("channelId %s format is error.\n", channelhash)
@@ -145,20 +145,20 @@ func GenTxClosePaymentChannel(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 创建支付通道
+	// Create payment channel
 	var paychanclose actions.Action_3_ClosePaymentChannel
 	paychanclose.ChannelId = channelhash
 
-	// 创建交易
+	// Create transaction
 	newTrs, e5 := transactions.NewEmptyTransaction_2_Simple(*feeAddress)
-	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // 使用 hold 的时间戳
+	newTrs.Timestamp = fields.BlockTxTimestamp(ctx.UseTimestamp()) // Use the timestamp of hold
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
 		return
 	}
 
 	newTrs.Fee = *feeAmount // set fee
-	// 放入action
+	// Put in action
 	e5 = newTrs.AppendAction(&paychanclose)
 	if e5 != nil {
 		fmt.Println("create transaction error, " + e5.Error())
@@ -172,8 +172,8 @@ func GenTxClosePaymentChannel(ctx ctx.Context, params []string) {
 		return
 	}
 
-	// 不检查签名
-	// 数据化
+	// Do not check signature
+	// Datalization
 	bodybytes, e7 := newTrs.Serialize()
 	if e7 != nil {
 		fmt.Println("transaction serialize error, " + e7.Error())
@@ -188,6 +188,6 @@ func GenTxClosePaymentChannel(ctx ctx.Context, params []string) {
 	fmt.Println(hex.EncodeToString(bodybytes))
 	fmt.Println("-------- TRANSACTION BODY [NOT SIGN COMPLETELY] END   --------")
 
-	// 记录
+	// record
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
