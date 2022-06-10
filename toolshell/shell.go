@@ -25,9 +25,9 @@ var (
 var welcomeContent = `
 Welcome to Hacash tool shell, you can:
 --------
-passwd ${XXX} ${XXX}  |  prikey ${0xAB123D...}  |  newkey  |  accounts  |  update | log
+passwd ${XXX} ${XXX}  |  prikey ${0xAB123D...}  |  newkey  |  accounts  |  update | log | closelog
 --------
-gentx sendcash ${FROM_ADDRESS} ${TO_ADDRESS} ${AMOUNT} ${FEE}  |  loadtx ${0xAB123D...}  |  txs
+gentx sendcash ${FROM_ADDRESS} ${TO_ADDRESS} ${AMOUNT} ${FEE}  |  txs
 --------
 sendtx $TXHASH $IP:PORT
 --------
@@ -97,7 +97,7 @@ func RunToolShell() {
 			params := strings.Fields(currentInputContent)
 			funcname := params[0]
 			parabody := params[1:]
-			switch params[0] {
+			switch funcname {
 			case "passwd":
 				setPrivateKeyByPassword(ctx, parabody)
 			case "prikey":
@@ -161,7 +161,7 @@ func closeLogFile(ctx *ctxToolShell) string {
 
 func showAccounts(ctx *ctxToolShell) {
 	if len(MyAccounts) == 0 {
-		fmt.Println("none")
+		fmt.Println("Get no account on your device momory, please check it!")
 		return
 	}
 
@@ -173,7 +173,7 @@ func showAccounts(ctx *ctxToolShell) {
 
 func showTxs(ctx *ctxToolShell) {
 	if len(Transactions) == 0 {
-		fmt.Println("none")
+		fmt.Println("Get no transaction record on your device memory, please check it!")
 		return
 	}
 
@@ -183,6 +183,11 @@ func showTxs(ctx *ctxToolShell) {
 }
 
 func setPrivateKey(ctx *ctxToolShell, params []string) {
+    if len(params) == 0 {
+		fmt.Println("command like 'prikey 0x9f33a504208cfabc1066f...', you need input private key! check it!")
+		return
+    }
+
 	for _, hexstr := range params {
 		if strings.HasPrefix(hexstr, "0x") {
 			hexstr = string([]byte(hexstr)[2:]) // drop 0x
