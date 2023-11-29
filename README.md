@@ -2,7 +2,8 @@
 Open Source Shell / Command Line Wallet
 
 
-[中文使用教程](./help.zh.md)
+[User manual](https://github.com/hacash/paper/blob/master/service/cmdwallet.help.en.md)
 
-[User manual](./help.en.md)
+README DOC:
+[https://github.com/hacash/paper](https://github.com/hacash/paper)
 
