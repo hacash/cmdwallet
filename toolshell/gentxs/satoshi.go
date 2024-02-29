@@ -92,7 +92,6 @@ func GenTxSimpleTransferSatoshi(ctx ctx.Context, params []string) {
 	ctx.SetTxToRecord(newTrs.Hash(), newTrs)
 }
 
-
 /*
 
 gentx btcmove <trsno> <block_height> <block_timestamp> <prev_btc> <btc> <add_hac> <origin_address> <trs_btc_tx_hx> <fee_addr> <fee>
@@ -121,7 +120,7 @@ func GenTxCreateSatoshiGenesis(ctx ctx.Context, params []string) {
 		return
 	}
 
-	genisisAct := &actions.Action_7_SatoshiGenesis{
+	genisisAct := &actions.Action_34_SatoshiGenesis{
 		TransferNo:               num4(params[0]),
 		BitcoinBlockHeight:       num4(params[1]),
 		BitcoinBlockTimestamp:    num5(params[2]),
